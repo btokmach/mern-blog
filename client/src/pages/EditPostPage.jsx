@@ -1,7 +1,5 @@
 import React from "react";
 
-const EditPostPage = () => {
+export const EditPostPage = () => {
   return <div>EditPostPage</div>;
 };
-
-export default EditPostPage;
