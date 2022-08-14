@@ -27,7 +27,7 @@ export const registration = async (req, res) => {
 
     res.json({
       newUser,
-      message: "Регістрація пройшла успішно.",
+      message: "Реєстрація пройшла успішно.",
     });
   } catch (error) {
     res.json({ message: "Помилка при створені користувача." });
