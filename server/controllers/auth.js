@@ -35,6 +35,7 @@ export const registration = async (req, res) => {
 
     res.json({
       newUser,
+      token,
       message: "Реєстрація пройшла успішно.",
     });
   } catch (error) {
@@ -83,7 +84,7 @@ export const login = async (req, res) => {
 // Get me
 export const getMe = async (req, res) => {
   try {
-    const user = await User.findById(req, userId);
+    const user = await User.findById(req.userId);
 
     if (!user) {
       return res.json({
@@ -96,7 +97,7 @@ export const getMe = async (req, res) => {
         id: user._id,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "30d" }
+      { expiresIn: "30d" },
     );
 
     res.json({
