@@ -18,7 +18,7 @@ export const createPost = async (req, res) => {
         username: user.username,
         title,
         text,
-        imgUrl,
+        imgUrl: fileName,
         author: req.userId,
       });
 
