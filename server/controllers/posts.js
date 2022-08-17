@@ -46,3 +46,19 @@ export const createPost = async (req, res) => {
     res.json({ message: "Щось пішло не так (" });
   }
 };
+
+// Get all posts
+
+export const getAll = async (req, res) => {
+  try {
+    const posts = await Post.find().sort("-createdAt");
+    const populaPosts = await Post.find().limit(5).sort("-views");
+    if (!posts) {
+      return res.json({ message: "Публікацій не знайдено" });
+    }
+
+    res.json({ posts, populaPosts });
+  } catch (error) {
+    res.json({ message: "Щось пішло не так (" });
+  }
+};
