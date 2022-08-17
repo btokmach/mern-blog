@@ -52,12 +52,26 @@ export const createPost = async (req, res) => {
 export const getAll = async (req, res) => {
   try {
     const posts = await Post.find().sort("-createdAt");
-    const populaPosts = await Post.find().limit(5).sort("-views");
+    const popularPosts = await Post.find().limit(5).sort("-views");
     if (!posts) {
       return res.json({ message: "Публікацій не знайдено" });
     }
 
-    res.json({ posts, populaPosts });
+    res.json({ posts, popularPosts });
+  } catch (error) {
+    res.json({ message: "Щось пішло не так (" });
+  }
+};
+
+// Get all posts by id
+
+export const getById = async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(req.params.id, {
+      $inc: { views: 1 },
+    });
+
+    res.json(post);
   } catch (error) {
     res.json({ message: "Щось пішло не так (" });
   }
