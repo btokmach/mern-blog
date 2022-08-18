@@ -81,14 +81,30 @@ export const getById = async (req, res) => {
 
 export const getMyPosts = async (req, res) => {
   try {
-    const user = await User.findById(req.userId)
+    const user = await User.findById(req.userId);
     const list = await Promise.all(
       user.posts.map((post) => {
-        return Post.findById(post._id)
-      }),
-    )
+        return Post.findById(post._id);
+      })
+    );
 
     res.json(list);
+  } catch (error) {
+    res.json({ message: "Щось пішло не так (" });
+  }
+};
+
+// Remove post
+
+export const removePost = async (req, res) => {
+  try {
+    const post = await Post.findByIdAndDelete(req.params.id);
+    if (!post) return res.json({ message: "Посту не існує" });
+    await User.findByIdAndUpdate(req.userId, {
+      $pull: { posts: req.params.id },
+    });
+
+    res.json({message: "Пост був видалений"});
   } catch (error) {
     res.json({ message: "Щось пішло не так (" });
   }
